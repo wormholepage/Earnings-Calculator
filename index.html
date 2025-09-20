@@ -4,32 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0b1220" />
-  <title>Wormhole 智能托管收益计算器（$USDT+$WHO）· 美化版</title>
+  <title>Wormhole 智能托管收益计算器（USDT + WHO）· 美化版</title>
   <style>
     /* =============== CSS 变量 & 主题 =============== */
     :root{
-      --bg: #0b1220;         /* 背景 */
-      --bg-alt:#0a0f1c;      /* 背景渐变色 */
-      --card:#0e1526;        /* 卡片底色 */
-      --card-2:#121a2b;      /* 卡片内层 */
-      --muted:#8ea0b9;       /* 次级文字 */
-      --text:#e6edf6;        /* 主文字 */
-      --accent:#4ea1ff;      /* 主色 */
-      --accent-2:#8bd5ff;    /* 主色亮 */
-      --good:#3bd67f;        /* 正向 */
-      --bad:#ff6b6b;         /* 错误 */
-      --warning:#ffb86b;     /* 提示 */
-      --ring: rgba(78,161,255,.35);
-      --border: rgba(255,255,255,.08);
-      --border-2: rgba(255,255,255,.06);
-      --shadow: 0 10px 40px rgba(0,0,0,.45);
-      --radius: 16px;
+      --bg: #0b1220; --bg-alt:#0a0f1c; --card:#0e1526; --card-2:#121a2b; --muted:#8ea0b9; --text:#e6edf6;
+      --accent:#4ea1ff; --accent-2:#8bd5ff; --good:#3bd67f; --bad:#ff6b6b; --warning:#ffb86b;
+      --ring: rgba(78,161,255,.35); --border: rgba(255,255,255,.08); --border-2: rgba(255,255,255,.06);
+      --shadow: 0 10px 40px rgba(0,0,0,.45); --radius: 16px;
     }
-
     @media (prefers-color-scheme: light){
-      :root{
-        --bg:#f6f8fb; --bg-alt:#eef3fb; --card:#ffffff; --card-2:#f5f7fb; --text:#0c1220; --muted:#627089; --border:rgba(0,0,0,.08); --border-2:rgba(0,0,0,.06);
-      }
+      :root{ --bg:#f6f8fb; --bg-alt:#eef3fb; --card:#ffffff; --card-2:#f5f7fb; --text:#0c1220; --muted:#627089; --border:rgba(0,0,0,.08); --border-2:rgba(0,0,0,.06); }
     }
 
     /* =============== 基础样式 =============== */
@@ -42,7 +27,7 @@
     .title{font-weight:900;font-size:30px;letter-spacing:.2px;margin:0;background:linear-gradient(90deg,var(--text),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
     .subtitle{color:var(--muted);font-size:13px;margin-top:6px}
 
-    .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .btn{cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text);padding:10px 14px;border-radius:12px;font-weight:700;transition:all .18s ease;backdrop-filter:saturate(140%) blur(2px)}
     .btn:hover{transform:translateY(-1px);border-color:var(--ring)}
     .btn:active{transform:translateY(0)}
@@ -90,15 +75,12 @@
     thead th{position:sticky;top:0;background:linear-gradient(180deg,rgba(255,255,255,.06),transparent)}
     th,td{border:1px solid var(--border);padding:10px;text-align:center}
 
-    /* 进度条（周期分成率） */
     .meter{height:10px;background:rgba(255,255,255,.06);border-radius:999px;overflow:hidden;border:1px solid var(--border)}
     .meter > span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .4s ease}
 
-    /* 提示气泡 */
     [data-tip]{position:relative}
     [data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:120%;left:0;white-space:nowrap;background:#0e1526;border:1px solid var(--border);color:var(--text);padding:6px 8px;border-radius:8px;font-size:12px;box-shadow:var(--shadow)}
 
-    /* Toast */
     .toast{position:fixed;inset:auto 16px 16px auto;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:var(--card);box-shadow:var(--shadow);opacity:0;transform:translateY(8px);transition:all .25s ease;z-index:50}
     .toast.show{opacity:1;transform:translateY(0)}
 
@@ -106,6 +88,13 @@
       .btn:hover{transform:none}
       .toast{transition:none}
       .kpi .value{transition:none}
+    }
+
+    /* === 新增：语言选择器样式 === */
+    .langSel{
+      min-width: 170px;
+      border-radius:12px;border:1px solid var(--border);
+      background:var(--card-2);color:var(--text);padding:10px 12px;
     }
   </style>
 </head>
@@ -116,26 +105,38 @@
     <symbol id="i-rocket" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c3.5 0 6 2.5 6 6 0 4-3 8-6 11-3-3-6-7-6-11 0-3.5 2.5-6 6-6Zm0 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></symbol>
     <symbol id="i-info" viewBox="0 0 24 24"><path fill="currentColor" d="M11 7h2v2h-2V7Zm0 4h2v6h-2v-6Zm1-9a10 10 0 1 0 0 20 10 10 0 0 0 0-20Z"/></symbol>
-    <symbol id="i-copy" viewBox="0 0 24 24"><path fill="currentColor" d="M16 1H4a2 2 0 0 0-2 2v12h2V3h12V1Zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 16H8V7h11v14Z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><path fill="currentColor" d="M16 1H4a2 2 0 0 0-2 2v12h2V3h12V1Zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2-2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 16H8V7h11v14Z"/></symbol>
     <symbol id="i-broom" viewBox="0 0 24 24"><path fill="currentColor" d="M13 3h2l6 6-2 2-6-6V3ZM3 14l7-7 7 7-7 7c-3 0-4.5-.5-7-7Z"/></symbol>
   </svg>
 
   <div class="wrap">
     <div class="header">
       <div>
-        <h1 class="title">Wormhole 收益计算器 <span class="subtitle">（USDT + WHO）</span></h1>
-        <div class="subtitle">一起共筑跨链隐私生态！</div>
+        <!-- === 标题区改为可替换 === -->
+        <h1 class="title" id="appTitle">Wormhole 收益计算器 <span class="subtitle" id="appTitleSub">（USDT + WHO）</span></h1>
+        <div class="subtitle" id="slogan">一起共筑跨链隐私生态！</div>
       </div>
       <div class="toolbar" role="toolbar" aria-label="快速操作">
-        <button id="exampleBtn" class="btn ghost" data-tip="填入示例值"><svg width="16" height="16"><use href="#i-rocket"/></svg> 示例</button>
-        <button id="copyBtn" class="btn ghost" data-tip="复制结果到剪贴板"><svg width="16" height="16"><use href="#i-copy"/></svg> 复制结果</button>
+        <button id="exampleBtn" class="btn ghost" data-tip="填入示例值"><svg width="16" height="16"><use href="#i-rocket"/></svg> <span class="txt">示例</span></button>
+        <button id="copyBtn" class="btn ghost" data-tip="复制结果到剪贴板"><svg width="16" height="16"><use href="#i-copy"/></svg> <span class="txt">复制结果</span></button>
+
+        <!-- === 新增：右上角语言切换 === -->
+        <select id="langSel" class="langSel" aria-label="Language">
+          <option value="zh">简体中文</option>
+          <option value="en">English</option>
+          <option value="th">ไทย</option>
+          <option value="vi">Tiếng Việt</option>
+          <option value="id">Bahasa Indonesia</option>
+          <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+        </select>
       </div>
     </div>
 
     <div class="card" aria-labelledby="calc-title">
       <div class="grid">
         <div>
-          <label for="point">地址点位（0–1 之间）</label>
+          <label for="point" id="lblPoint">地址点位（0–1 之间）</label>
           <div class="input">
             <input id="point" type="number" inputmode="decimal" placeholder="例如：0.5 或 0.7" min="0" max="1" step="0.01" aria-describedby="pointHint pointErr" />
           </div>
@@ -147,12 +148,12 @@
             <div class="chip" data-point="0.5">0.5%</div>
           </div>
           <div id="pointErr" class="error" role="alert" aria-live="polite" hidden>
-            <svg width="16" height="16"><use href="#i-alert"/></svg><span>点位需在 0–1 之间（如 1、0.8、0.35）。</span>
+            <svg width="16" height="16"><use href="#i-alert"/></svg><span class="txt">点位需在 0–1 之间（如 1、0.8、0.35）。</span>
           </div>
         </div>
 
         <div>
-          <label for="amount">托管金额（USDT，仅限下表金额）</label>
+          <label for="amount" id="lblAmount">托管金额（USDT，仅限下表金额）</label>
           <div class="input">
             <input id="amount" type="number" inputmode="numeric" placeholder="100–10000，100 的整数倍" min="100" step="100" aria-describedby="amountErr" />
           </div>
@@ -165,12 +166,12 @@
             <div class="chip" data-amt="10000">10000</div>
           </div>
           <div id="amountErr" class="error" role="alert" aria-live="polite" hidden>
-            <svg width="16" height="16"><use href="#i-alert"/></svg><span>仅支持 100–10000，且为 100 的整数倍。</span>
+            <svg width="16" height="16"><use href="#i-alert"/></svg><span class="txt">仅支持 100–10000，且为 100 的整数倍。</span>
           </div>
         </div>
 
         <div>
-          <label for="period">托管周期</label>
+          <label for="period" id="lblPeriod">托管周期</label>
           <select id="period" aria-describedby="periodHint">
             <option value="7" data-multiplier="0.6">7 天（收益分成率：60%）</option>
             <option value="30" data-multiplier="0.7">30 天（收益分成率：70%）</option>
@@ -179,59 +180,60 @@
             <option value="360" data-multiplier="1.0">360 天（收益分成率：100%）</option>
           </select>
           <div id="periodHint" class="hint">注：此处按 <strong>360 天</strong> 为最高档。</div>
-          <div class="hint">收益分成率进度：</div>
+          <div class="hint" id="shareProgressLabel">收益分成率进度：</div>
           <div class="meter" aria-hidden="true"><span id="meterBar"></span></div>
         </div>
 
         <div class="row actions">
-          <button id="calcBtn" class="btn primary"><svg width="16" height="16"><use href="#i-rocket"/></svg> 计算</button>
-          <button id="resetBtn" class="btn"><svg width="16" height="16"><use href="#i-broom"/></svg> 清空</button>
-          <span id="status" class="status" aria-live="polite"><svg width="14" height="14"><use href="#i-info"/></svg> 等待输入</span>
+          <button id="calcBtn" class="btn primary"><svg width="16" height="16"><use href="#i-rocket"/></svg> <span class="txt">计算</span></button>
+          <button id="resetBtn" class="btn"><svg width="16" height="16"><use href="#i-broom"/></svg> <span class="txt">清空</span></button>
+          <span id="status" class="status" aria-live="polite"><svg width="14" height="14"><use href="#i-info"/></svg> <span class="txt">等待输入</span></span>
         </div>
       </div>
 
       <div class="result" id="calc-title">
         <div class="kpis">
           <div class="kpi">
-            <div class="label"><svg width="14" height="14"><use href="#i-info"/></svg> 日收益率（USDT）</div>
+            <div class="label"><svg width="14" height="14"><use href="#i-info"/></svg> <span id="kDailyRate">日收益率（USDT）</span></div>
             <div id="dailyRate" class="value">—</div>
-            <div class="hint">= 点位(%) × 周期系数</div>
+            <div class="hint" id="kDailyRateHint">= 点位(%) × 周期系数</div>
           </div>
           <div class="kpi">
-            <div class="label"><svg width="14" height="14"><use href="#i-info"/></svg> WHO 日基础奖励</div>
+            <div class="label"><svg width="14" height="14"><use href="#i-info"/></svg> <span id="kWhoDaily">WHO 日基础奖励</span></div>
             <div id="whoDaily" class="value">—</div>
-            <div class="hint">由托管金额对应表决定</div>
+            <div class="hint" id="kWhoDailyHint">由托管金额对应表决定</div>
           </div>
           <div class="kpi">
-            <div class="label"><svg width="14" height="14"><use href="#i-info"/></svg> 周期天数</div>
+            <div class="label"><svg width="14" height="14"><use href="#i-info"/></svg> <span id="kDays">周期天数</span></div>
             <div id="days" class="value">—</div>
           </div>
         </div>
 
         <div class="kpis">
           <div class="kpi">
-            <div class="label"><svg width="14" height="14"><use href="#i-info"/></svg> 每日收益（USDT）</div>
+            <div class="label"><svg width="14" height="14"><use href="#i-info"/></svg> <span id="kDailyIncome">每日收益（USDT）</span></div>
             <div id="dailyIncome" class="value">—</div>
           </div>
           <div class="kpi">
-            <div class="label"><svg width="14" height="14"><use href="#i-info"/></svg> WHO 总基础收益</div>
+            <div class="label"><svg width="14" height="14"><use href="#i-info"/></svg> <span id="kWhoTotal">WHO 总基础收益</span></div>
             <div id="whoTotal" class="value">—</div>
           </div>
           <div class="kpi">
-            <div class="label"><svg width="14" height="14"><use href="#i-info"/></svg> 总收益（合计）</div>
+            <div class="label"><svg width="14" height="14"><use href="#i-info"/></svg> <span id="kGrandTotal">总收益（合计）</span></div>
             <div id="grandTotal" class="value">—</div>
-            <div class="hint">显示为 USDT + WHO</div>
+            <div class="hint" id="kGrandTotalHint">显示为 USDT + WHO</div>
           </div>
         </div>
 
         <div class="footer">
-          计算公式：<span class="muted">USDT 总收益 = 金额 × 日收益率 × 周期天数；WHO 总收益 = WHO 日奖励 × 周期天数。</span>
+          <span id="formulaTitle">计算公式：</span>
+          <span class="muted" id="formulaText">USDT 总收益 = 金额 × 日收益率 × 周期天数；WHO 总收益 = WHO 日奖励 × 周期天数。</span>
         </div>
 
         <details>
-          <summary>查看 WHO 基础日奖励对照表（供参考）</summary>
+          <summary id="whoTableSummary">查看 WHO 基础日奖励对照表（供参考）</summary>
           <table>
-            <thead><tr><th>托管数量（USDT）</th><th>WHO 日奖励（枚）</th></tr></thead>
+            <thead><tr><th id="thAmt">托管数量（USDT）</th><th id="thWho">WHO 日奖励（枚）</th></tr></thead>
             <tbody id="whoTableBody"></tbody>
           </table>
         </details>
@@ -254,6 +256,7 @@
     const pointErr = $('#pointErr');
     const amountErr = $('#amountErr');
     const meterBar = $('#meterBar');
+    const langSel = $('#langSel'); // === 新增
 
     const dailyRateEl = $('#dailyRate');
     const whoDailyEl = $('#whoDaily');
@@ -274,11 +277,11 @@
     (function fillWhoTable(){
       const rows = [];
       for(let k=100;k<=1000;k+=100){ rows.push([k, WHO_MAP[k]]); }
-      for(let k=1100;k<=10000;k+=100){ rows.push([k, (k*0.005).toFixed(2).replace(/\.00$/,'')]); }
+      for(let k=1100;k<=10000;k+=100){ rows.push([k, (k*0.005).toFixed(2).replace(/\\.00$/,'')]); }
       whoTableBody.innerHTML = rows.map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('');
     })();
 
-    function fmtPct(v){ return (v*100).toFixed(3).replace(/\.0+$/,'') + '%'; }
+    function fmtPct(v){ return (v*100).toFixed(3).replace(/\\.0+$/,'') + '%'; }
     function fmtNum(v){ return Number(v).toFixed(2); }
 
     function showToast(msg){
@@ -289,7 +292,7 @@
     }
 
     function setStatus(type, text){
-      statusEl.textContent = '';
+      statusEl.innerHTML = '';
       statusEl.className = 'status ' + (type||'');
       const icon = document.createElementNS('http://www.w3.org/2000/svg','svg');
       icon.setAttribute('width','14');
@@ -298,11 +301,13 @@
       use.setAttribute('href', type==='bad' ? '#i-alert' : (type==='ok' ? '#i-check' : '#i-info'));
       icon.appendChild(use);
       statusEl.appendChild(icon);
-      statusEl.appendChild(document.createTextNode(' ' + text));
+      const span = document.createElement('span');
+      span.className = 'txt';
+      span.textContent = ' ' + text;
+      statusEl.appendChild(span);
     }
 
     function syncRange(){
-      // 同步滑杆与输入框
       pointRange.value = pointEl.value || 0;
       amountRange.value = amountEl.value || 100;
     }
@@ -321,7 +326,7 @@
         amountErr.hidden = false; ok = false;
       }
 
-      setStatus(ok? 'ok':'bad', ok? '可计算' : '输入有误');
+      setStatus(ok? 'ok':'bad', ok? t('status_ready') : t('status_invalid'));
       return ok;
     }
 
@@ -345,11 +350,11 @@
       dailyRateEl.textContent = fmtPct(dailyRate);
       whoDailyEl.textContent = whoDaily.toString();
       whoTotalEl.textContent = whoTotal.toString();
-      daysEl.textContent = String(days) + ' 天';
+      daysEl.textContent = String(days) + ' ' + t('unit_day');
       dailyIncomeEl.textContent = fmtNum(dailyIncome);
       grandTotalEl.textContent = `${fmtNum(totalUSDT)} USDT + ${whoTotal} WHO`;
 
-      setStatus('ok','已计算');
+      setStatus('ok', t('status_done'));
     }
 
     function reset(){
@@ -360,8 +365,8 @@
       pointErr.hidden = true; amountErr.hidden = true;
       meter();
       syncRange();
-      setStatus('', '已清空');
-      showToast('已清空');
+      setStatus('', t('status_cleared'));
+      showToast(t('toast_cleared'));
     }
 
     function meter(){
@@ -371,29 +376,29 @@
 
     // 快捷 chip
     document.querySelectorAll('[data-point]').forEach(ch=>{
-      ch.addEventListener('click', ()=>{ pointEl.value = ch.dataset.point; pointRange.value = ch.dataset.point; setStatus('', '等待计算'); });
+      ch.addEventListener('click', ()=>{ pointEl.value = ch.dataset.point; pointRange.value = ch.dataset.point; setStatus('', t('status_wait')); });
     });
     document.querySelectorAll('[data-amt]').forEach(ch=>{
-      ch.addEventListener('click', ()=>{ amountEl.value = ch.dataset.amt; amountRange.value = ch.dataset.amt; setStatus('', '等待计算'); });
+      ch.addEventListener('click', ()=>{ amountEl.value = ch.dataset.amt; amountRange.value = ch.dataset.amt; setStatus('', t('status_wait')); });
     });
 
     // 同步滑杆 <-> 输入
-    pointEl.addEventListener('input', ()=>{ pointRange.value = pointEl.value || 0; setStatus('', '等待计算'); });
-    pointRange.addEventListener('input', ()=>{ pointEl.value = pointRange.value; setStatus('', '等待计算'); });
+    pointEl.addEventListener('input', ()=>{ pointRange.value = pointEl.value || 0; setStatus('', t('status_wait')); });
+    pointRange.addEventListener('input', ()=>{ pointEl.value = pointRange.value; setStatus('', t('status_wait')); });
     amountEl.addEventListener('input', ()=>{
       amountEl.step = 100;
       amountRange.step = 100;
       amountRange.value = amountEl.value || 100;
-      setStatus('', '等待计算');
+      setStatus('', t('status_wait'));
     });
-    amountRange.addEventListener('input', ()=>{ amountEl.value = amountRange.value; setStatus('', '等待计算'); });
+    amountRange.addEventListener('input', ()=>{ amountEl.value = amountRange.value; setStatus('', t('status_wait')); });
 
-    periodEl.addEventListener('change', ()=>{ setStatus('', '等待计算'); meter(); });
+    periodEl.addEventListener('change', ()=>{ setStatus('', t('status_wait')); meter(); });
 
     // 复制结果
     $('#copyBtn').addEventListener('click', ()=>{
-      const txt = `点位: ${pointEl.value || '-'}%\n金额: ${amountEl.value || '-'} USDT\n周期: ${periodEl.value} 天\n—\n日收益率: ${dailyRateEl.textContent}\n每日收益: ${dailyIncomeEl.textContent} USDT\nWHO 日奖励: ${whoDailyEl.textContent}\nWHO 总收益: ${whoTotalEl.textContent}\n合计: ${grandTotalEl.textContent}`;
-      navigator.clipboard?.writeText(txt).then(()=>showToast('结果已复制')).catch(()=>showToast('复制失败'));
+      const txt = `${t('copy_point')}: ${pointEl.value || '-'}%\n${t('copy_amount')}: ${amountEl.value || '-'} USDT\n${t('copy_period')}: ${periodEl.value} ${t('unit_day')}\n—\n${t('k_daily_rate')}: ${dailyRateEl.textContent}\n${t('k_daily_income')}: ${dailyIncomeEl.textContent} USDT\n${t('k_who_daily')}: ${whoDailyEl.textContent}\n${t('k_who_total')}: ${whoTotalEl.textContent}\n${t('k_grand_total')}: ${grandTotalEl.textContent}`;
+      navigator.clipboard?.writeText(txt).then(()=>showToast(t('toast_copied'))).catch(()=>showToast(t('toast_copy_fail')));
     });
 
     // 示例值
@@ -401,7 +406,7 @@
       pointEl.value = 0.8; pointRange.value = 0.8;
       amountEl.value = 5000; amountRange.value = 5000;
       periodEl.value = '60'; meter();
-      setStatus('', '等待计算');
+      setStatus('', t('status_wait'));
     });
 
     // 回车触发
@@ -411,11 +416,296 @@
     calcBtn.addEventListener('click', calc);
     resetBtn.addEventListener('click', reset);
 
+    // === 多语言：字典 & 应用 ===
+    const LANG_HTML = { zh:'zh-CN', en:'en', th:'th', vi:'vi', id:'id', ja:'ja', ko:'ko' };
+
+    const I18N = {
+      zh: {
+        app_title:'Wormhole 收益计算器', app_sub:'（USDT + WHO）', slogan:'一起共筑跨链隐私生态！',
+        btn_example:'示例', btn_copy:'复制结果', tip_example:'填入示例值', tip_copy:'复制结果到剪贴板',
+        lbl_point:'地址点位（0–1 之间）',
+        point_hint:'填 <strong>1</strong> 表示 <strong>1%</strong>；填 <strong>0.8</strong> 表示 <strong>0.8%</strong> 的基准上限。',
+        point_err:'点位需在 0–1 之间（如 1、0.8、0.35）。',
+        lbl_amount:'托管金额（USDT，仅限下表金额）',
+        amount_err:'仅支持 100–10000，且为 100 的整数倍。',
+        lbl_period:'托管周期',
+        opt_fmt:(d,p)=>`${d} 天（收益分成率：${p}%）`,
+        period_hint:'注：此处按 <strong>360 天</strong> 为最高档。',
+        share_progress:'收益分成率进度：',
+        btn_calc:'计算', btn_reset:'清空',
+        status_wait:'等待输入', status_ready:'可计算', status_invalid:'输入有误', status_done:'已计算', status_cleared:'已清空',
+        k_daily_rate:'日收益率（USDT）', k_daily_rate_hint:'= 点位(%) × 周期系数',
+        k_who_daily:'WHO 日基础奖励', k_who_daily_hint:'由托管金额对应表决定',
+        k_days:'周期天数', k_daily_income:'每日收益（USDT）', k_who_total:'WHO 总基础收益', k_grand_total:'总收益（合计）', k_grand_total_hint:'显示为 USDT + WHO',
+        formula_title:'计算公式：',
+        formula_text:'USDT 总收益 = 金额 × 日收益率 × 周期天数；WHO 总收益 = WHO 日奖励 × 周期天数。',
+        who_table_summary:'查看 WHO 基础日奖励对照表（供参考）',
+        th_amt:'托管数量（USDT）', th_who:'WHO 日奖励（枚）',
+        unit_day:'天',
+        copy_point:'点位', copy_amount:'金额', copy_period:'周期',
+        toast_cleared:'已清空', toast_copied:'结果已复制', toast_copy_fail:'复制失败',
+        document_title:'Wormhole 智能托管收益计算器（USDT + WHO）· 美化版'
+      },
+      en: {
+        app_title:'Wormhole Earnings Calculator', app_sub:'(USDT + WHO)', slogan:'Build the cross-chain privacy ecosystem together!',
+        btn_example:'Example', btn_copy:'Copy',
+        tip_example:'Fill with example values', tip_copy:'Copy results to clipboard',
+        lbl_point:'Address point (between 0–1)',
+        point_hint:'Enter <strong>1</strong> for <strong>1%</strong>; <strong>0.8</strong> means a <strong>0.8%</strong> base cap.',
+        point_err:'Value must be between 0–1 (e.g., 1, 0.8, 0.35).',
+        lbl_amount:'Custody amount (USDT, limited to table values)',
+        amount_err:'Only 100–10000 supported, in steps of 100.',
+        lbl_period:'Custody period',
+        opt_fmt:(d,p)=>`${d} days (share rate: ${p}%)`,
+        period_hint:'Note: <strong>360 days</strong> is the highest tier.',
+        share_progress:'Share-rate progress:',
+        btn_calc:'Calculate', btn_reset:'Reset',
+        status_wait:'Waiting for input', status_ready:'Ready', status_invalid:'Invalid input', status_done:'Calculated', status_cleared:'Cleared',
+        k_daily_rate:'Daily rate (USDT)', k_daily_rate_hint:'= Point(%) × Period multiplier',
+        k_who_daily:'WHO daily base reward', k_who_daily_hint:'Determined by the amount table',
+        k_days:'Period days', k_daily_income:'Daily income (USDT)', k_who_total:'WHO total base reward', k_grand_total:'Total (combined)', k_grand_total_hint:'Shown as USDT + WHO',
+        formula_title:'Formula:', formula_text:'USDT total = Amount × Daily rate × Days; WHO total = WHO daily × Days.',
+        who_table_summary:'View WHO daily base reward table (reference)',
+        th_amt:'Custody amount (USDT)', th_who:'WHO daily reward (tokens)',
+        unit_day:'days',
+        copy_point:'Point', copy_amount:'Amount', copy_period:'Period',
+        toast_cleared:'Cleared', toast_copied:'Copied', toast_copy_fail:'Copy failed',
+        document_title:'Wormhole Earnings Calculator (USDT + WHO) · Polished'
+      },
+      th: {
+        app_title:'Wormhole ตัวคำนวณผลตอบแทน', app_sub:'(USDT + WHO)', slogan:'มาร่วมสร้างระบบนิเวศความเป็นส่วนตัวข้ามเชน!',
+        btn_example:'ตัวอย่าง', btn_copy:'คัดลอก',
+        tip_example:'กรอกค่าตัวอย่าง', tip_copy:'คัดลอกผลลัพธ์',
+        lbl_point:'คะแนนที่อยู่ (ระหว่าง 0–1)',
+        point_hint:'ใส่ <strong>1</strong> = <strong>1%</strong>; ใส่ <strong>0.8</strong> = เพดานพื้นฐาน <strong>0.8%</strong>.',
+        point_err:'ต้องอยู่ระหว่าง 0–1 (เช่น 1, 0.8, 0.35)',
+        lbl_amount:'จำนวนเงินฝาก (USDT ตามตารางด้านล่าง)',
+        amount_err:'รองรับ 100–10000 และต้องเป็นจำนวนคูณของ 100',
+        lbl_period:'ระยะเวลาฝาก',
+        opt_fmt:(d,p)=>`${d} วัน (อัตราแบ่งผลตอบแทน: ${p}%)`,
+        period_hint:'หมายเหตุ: <strong>360 วัน</strong> คือระดับสูงสุด',
+        share_progress:'ความคืบหน้าอัตราแบ่งผลตอบแทน:',
+        btn_calc:'คำนวณ', btn_reset:'ล้างค่า',
+        status_wait:'รอการกรอก', status_ready:'พร้อมคำนวณ', status_invalid:'ข้อมูลไม่ถูกต้อง', status_done:'คำนวณแล้ว', status_cleared:'ล้างแล้ว',
+        k_daily_rate:'อัตรารายวัน (USDT)', k_daily_rate_hint:'= จุด(%) × ตัวคูณระยะเวลา',
+        k_who_daily:'รางวัล WHO ต่อวัน (พื้นฐาน)', k_who_daily_hint:'อ้างอิงตามตารางจำนวนเงิน',
+        k_days:'จำนวนวัน', k_daily_income:'รายได้ต่อวัน (USDT)', k_who_total:'รางวัล WHO รวม (พื้นฐาน)', k_grand_total:'ผลตอบแทนรวม', k_grand_total_hint:'แสดงเป็น USDT + WHO',
+        formula_title:'สูตรคำนวณ:', formula_text:'USDT รวม = จำนวนเงิน × อัตรารายวัน × วัน; WHO รวม = รางวัลรายวัน × วัน',
+        who_table_summary:'ดูตารางรางวัลรายวัน WHO (อ้างอิง)',
+        th_amt:'จำนวนเงินฝาก (USDT)', th_who:'รางวัล WHO ต่อวัน (โทเค็น)',
+        unit_day:'วัน',
+        copy_point:'จุด', copy_amount:'จำนวนเงิน', copy_period:'ระยะเวลา',
+        toast_cleared:'ล้างแล้ว', toast_copied:'คัดลอกแล้ว', toast_copy_fail:'คัดลอกล้มเหลว',
+        document_title:'Wormhole ตัวคำนวณผลตอบแทน (USDT + WHO)'
+      },
+      vi: {
+        app_title:'Máy tính lợi nhuận Wormhole', app_sub:'(USDT + WHO)', slogan:'Cùng xây dựng hệ sinh thái quyền riêng tư cross-chain!',
+        btn_example:'Ví dụ', btn_copy:'Sao chép',
+        tip_example:'Điền giá trị ví dụ', tip_copy:'Sao chép kết quả',
+        lbl_point:'Điểm địa chỉ (0–1)',
+        point_hint:'Nhập <strong>1</strong> = <strong>1%</strong>; <strong>0.8</strong> = trần cơ bản <strong>0.8%</strong>.',
+        point_err:'Phải trong khoảng 0–1 (vd: 1, 0.8, 0.35).',
+        lbl_amount:'Số tiền ký quỹ (USDT, theo bảng)',
+        amount_err:'Chỉ hỗ trợ 100–10000 và bội số của 100.',
+        lbl_period:'Chu kỳ ký quỹ',
+        opt_fmt:(d,p)=>`${d} ngày (tỷ lệ chia lợi nhuận: ${p}%)`,
+        period_hint:'Lưu ý: <strong>360 ngày</strong> là bậc cao nhất.',
+        share_progress:'Tiến độ tỷ lệ chia lợi nhuận:',
+        btn_calc:'Tính', btn_reset:'Xoá',
+        status_wait:'Chờ nhập', status_ready:'Có thể tính', status_invalid:'Nhập sai', status_done:'Đã tính', status_cleared:'Đã xoá',
+        k_daily_rate:'Tỷ lệ ngày (USDT)', k_daily_rate_hint:'= Điểm(%) × Hệ số chu kỳ',
+        k_who_daily:'WHO cơ bản mỗi ngày', k_who_daily_hint:'Quy định theo bảng số tiền',
+        k_days:'Số ngày', k_daily_income:'Thu nhập mỗi ngày (USDT)', k_who_total:'WHO cơ bản tổng', k_grand_total:'Tổng (hợp nhất)', k_grand_total_hint:'Hiển thị USDT + WHO',
+        formula_title:'Công thức:', formula_text:'USDT tổng = Số tiền × Tỷ lệ ngày × Số ngày; WHO tổng = WHO/ngày × Số ngày.',
+        who_table_summary:'Xem bảng WHO cơ bản mỗi ngày (tham khảo)',
+        th_amt:'Số tiền (USDT)', th_who:'WHO/ngày (token)',
+        unit_day:'ngày',
+        copy_point:'Điểm', copy_amount:'Số tiền', copy_period:'Chu kỳ',
+        toast_cleared:'Đã xoá', toast_copied:'Đã sao chép', toast_copy_fail:'Sao chép lỗi',
+        document_title:'Máy tính lợi nhuận Wormhole (USDT + WHO)'
+      },
+      id: {
+        app_title:'Kalkulator Hasil Wormhole', app_sub:'(USDT + WHO)', slogan:'Bangun ekosistem privasi lintas-rantai bersama!',
+        btn_example:'Contoh', btn_copy:'Salin',
+        tip_example:'Isi nilai contoh', tip_copy:'Salin hasil',
+        lbl_point:'Titik alamat (antara 0–1)',
+        point_hint:'Masukkan <strong>1</strong> = <strong>1%</strong>; <strong>0.8</strong> = batas dasar <strong>0.8%</strong>.',
+        point_err:'Harus antara 0–1 (mis. 1, 0.8, 0.35).',
+        lbl_amount:'Jumlah kustodi (USDT, sesuai tabel)',
+        amount_err:'Hanya 100–10000 dan kelipatan 100.',
+        lbl_period:'Periode kustodi',
+        opt_fmt:(d,p)=>`${d} hari (rasio bagi hasil: ${p}%)`,
+        period_hint:'Catatan: <strong>360 hari</strong> adalah tier tertinggi.',
+        share_progress:'Progres rasio bagi hasil:',
+        btn_calc:'Hitung', btn_reset:'Reset',
+        status_wait:'Menunggu input', status_ready:'Siap hitung', status_invalid:'Input tidak valid', status_done:'Selesai dihitung', status_cleared:'Direset',
+        k_daily_rate:'Tingkat harian (USDT)', k_daily_rate_hint:'= Poin(%) × Pengali periode',
+        k_who_daily:'Hadiah WHO harian (dasar)', k_who_daily_hint:'Berdasar tabel jumlah',
+        k_days:'Jumlah hari', k_daily_income:'Pendapatan harian (USDT)', k_who_total:'Total WHO (dasar)', k_grand_total:'Total (gabungan)', k_grand_total_hint:'Ditampilkan sebagai USDT + WHO',
+        formula_title:'Rumus:', formula_text:'USDT total = Jumlah × Tingkat harian × Hari; WHO total = WHO harian × Hari.',
+        who_table_summary:'Lihat tabel hadiah harian WHO (referensi)',
+        th_amt:'Jumlah (USDT)', th_who:'WHO/hari (token)',
+        unit_day:'hari',
+        copy_point:'Poin', copy_amount:'Jumlah', copy_period:'Periode',
+        toast_cleared:'Direset', toast_copied:'Disalin', toast_copy_fail:'Gagal menyalin',
+        document_title:'Kalkulator Hasil Wormhole (USDT + WHO)'
+      },
+      ja: {
+        app_title:'Wormhole 収益計算機', app_sub:'(USDT + WHO)', slogan:'クロスチェーンのプライバシーエコシステムを共に！',
+        btn_example:'サンプル', btn_copy:'結果をコピー',
+        tip_example:'サンプル値を入力', tip_copy:'結果をクリップボードへ',
+        lbl_point:'アドレスポイント（0～1 の間）',
+        point_hint:'<strong>1</strong> は <strong>1%</strong>、<strong>0.8</strong> は基準上限 <strong>0.8%</strong> を意味します。',
+        point_err:'0～1 の範囲で入力してください（例: 1, 0.8, 0.35）',
+        lbl_amount:'預かり金額（USDT、下表の金額のみ）',
+        amount_err:'100～10000 のみ、100 の倍数で入力',
+        lbl_period:'預かり期間',
+        opt_fmt:(d,p)=>`${d} 日（配分率: ${p}%）`,
+        period_hint:'注：<strong>360 日</strong>が最上位です。',
+        share_progress:'配分率の進捗：',
+        btn_calc:'計算', btn_reset:'クリア',
+        status_wait:'入力待ち', status_ready:'計算可能', status_invalid:'入力エラー', status_done:'計算済み', status_cleared:'クリア済み',
+        k_daily_rate:'日利率（USDT）', k_daily_rate_hint:'= ポイント(%) × 期間係数',
+        k_who_daily:'WHO 日次（基礎）', k_who_daily_hint:'金額表により決定',
+        k_days:'日数', k_daily_income:'日次収益（USDT）', k_who_total:'WHO 合計（基礎）', k_grand_total:'合計（併記）', k_grand_total_hint:'USDT + WHO 表示',
+        formula_title:'計算式：', formula_text:'USDT 合計 = 金額 × 日利率 × 日数；WHO 合計 = 日次 WHO × 日数。',
+        who_table_summary:'WHO 日次基礎報酬の対照表を見る（参考）',
+        th_amt:'金額（USDT）', th_who:'WHO/日（枚）',
+        unit_day:'日',
+        copy_point:'ポイント', copy_amount:'金額', copy_period:'期間',
+        toast_cleared:'クリアしました', toast_copied:'コピーしました', toast_copy_fail:'コピー失敗',
+        document_title:'Wormhole 収益計算機 (USDT + WHO)'
+      },
+      ko: {
+        app_title:'Wormhole 수익 계산기', app_sub:'(USDT + WHO)', slogan:'크로스체인 프라이버시 생태계를 함께 구축해요!',
+        btn_example:'예시', btn_copy:'결과 복사',
+        tip_example:'예시 값 입력', tip_copy:'결과를 클립보드로 복사',
+        lbl_point:'주소 포인트 (0–1 사이)',
+        point_hint:'<strong>1</strong>은 <strong>1%</strong>, <strong>0.8</strong>은 기준 상한 <strong>0.8%</strong>를 의미합니다.',
+        point_err:'0–1 사이여야 합니다(예: 1, 0.8, 0.35).',
+        lbl_amount:'예치 금액 (USDT, 아래 표 한정)',
+        amount_err:'100–10000만 지원하며 100의 배수여야 함',
+        lbl_period:'예치 기간',
+        opt_fmt:(d,p)=>`${d}일 (수익 분배율: ${p}%)`,
+        period_hint:'참고: <strong>360일</strong>이 최고 구간입니다.',
+        share_progress:'분배율 진행도:',
+        btn_calc:'계산', btn_reset:'초기화',
+        status_wait:'입력 대기', status_ready:'계산 가능', status_invalid:'입력 오류', status_done:'계산 완료', status_cleared:'초기화 완료',
+        k_daily_rate:'일일 이율 (USDT)', k_daily_rate_hint:'= 포인트(%) × 기간 계수',
+        k_who_daily:'WHO 일일 보상 (기본)', k_who_daily_hint:'금액 표에 따름',
+        k_days:'기간 일수', k_daily_income:'일일 수익 (USDT)', k_who_total:'WHO 총합 (기본)', k_grand_total:'총합 (합산)', k_grand_total_hint:'USDT + WHO로 표시',
+        formula_title:'계산식:', formula_text:'USDT 총합 = 금액 × 일일 이율 × 일수; WHO 총합 = WHO/일 × 일수.',
+        who_table_summary:'WHO 일일 기본 보상표 보기(참고)',
+        th_amt:'금액 (USDT)', th_who:'WHO/일 (토큰)',
+        unit_day:'일',
+        copy_point:'포인트', copy_amount:'금액', copy_period:'기간',
+        toast_cleared:'초기화됨', toast_copied:'복사됨', toast_copy_fail:'복사 실패',
+        document_title:'Wormhole 수익 계산기 (USDT + WHO)'
+      }
+    };
+
+    function t(key){
+      const lang = window.__lang || 'zh';
+      const v = I18N[lang][key];
+      return typeof v === 'string' ? v : (v ?? '');
+    }
+
+    function applyLang(lang){
+      window.__lang = lang;
+      localStorage.setItem('wormhole_lang', lang);
+      document.documentElement.lang = LANG_HTML[lang] || 'en';
+      document.title = I18N[lang].document_title || document.title;
+
+      // 标题 & slogan
+      $('#appTitle').innerHTML = `${t('app_title')} <span class="subtitle" id="appTitleSub">${t('app_sub')}</span>`;
+      $('#slogan').textContent = t('slogan');
+
+      // 工具栏按钮
+      $('#exampleBtn .txt').textContent = t('btn_example');
+      $('#copyBtn .txt').textContent = t('btn_copy');
+      $('#exampleBtn').setAttribute('data-tip', t('tip_example'));
+      $('#copyBtn').setAttribute('data-tip', t('tip_copy'));
+
+      // 表单标签 & 提示
+      $('#lblPoint').textContent = t('lbl_point');
+      $('#pointHint').innerHTML = t('point_hint');
+      $('#pointErr .txt').textContent = t('point_err');
+
+      $('#lblAmount').textContent = t('lbl_amount');
+      $('#amountErr .txt').textContent = t('amount_err');
+
+      $('#lblPeriod').textContent = t('lbl_period');
+      $('#periodHint').innerHTML = t('period_hint');
+      $('#shareProgressLabel').textContent = t('share_progress');
+
+      // 周期选项文字（保持 data-multiplier 不变）
+      const opts = [
+        {days:7, p:60}, {days:30, p:70}, {days:60, p:80}, {days:180, p:90}, {days:360, p:100}
+      ];
+      [...periodEl.options].forEach((op,i)=>{
+        const {days,p} = opts[i];
+        op.textContent = I18N[lang].opt_fmt(days,p);
+      });
+
+      // 动作按钮
+      $('#calcBtn .txt').textContent = t('btn_calc');
+      $('#resetBtn .txt').textContent = t('btn_reset');
+
+      // 状态条（仅替换文字不动图标）
+      const st = statusEl.querySelector('.txt');
+      if(st) st.textContent = ' ' + t('status_wait');
+
+      // KPI & 文案
+      $('#kDailyRate').textContent = t('k_daily_rate');
+      $('#kDailyRateHint').textContent = t('k_daily_rate_hint');
+      $('#kWhoDaily').textContent = t('k_who_daily');
+      $('#kWhoDailyHint').textContent = t('k_who_daily_hint');
+      $('#kDays').textContent = t('k_days');
+      $('#kDailyIncome').textContent = t('k_daily_income');
+      $('#kWhoTotal').textContent = t('k_who_total');
+      $('#kGrandTotal').textContent = t('k_grand_total');
+      $('#kGrandTotalHint').textContent = t('k_grand_total_hint');
+
+      $('#formulaTitle').textContent = t('formula_title');
+      $('#formulaText').textContent = t('formula_text');
+
+      $('#whoTableSummary').textContent = t('who_table_summary');
+      $('#thAmt').textContent = t('th_amt');
+      $('#thWho').textContent = t('th_who');
+
+      // 占位符
+      pointEl.placeholder = (lang==='zh') ? '例如：0.5 或 0.7' :
+        (lang==='en') ? 'e.g., 0.5 or 0.7' :
+        (lang==='ja') ? '例: 0.5 や 0.7' :
+        (lang==='ko') ? '예: 0.5 또는 0.7' :
+        (lang==='th') ? 'เช่น 0.5 หรือ 0.7' :
+        (lang==='vi') ? 'ví dụ: 0.5 hoặc 0.7' :
+        'mis: 0.5 atau 0.7';
+
+      amountEl.placeholder = (lang==='zh') ? '100–10000，100 的整数倍' :
+        (lang==='en') ? '100–10000, multiples of 100' :
+        (lang==='ja') ? '100～10000（100 の倍数）' :
+        (lang==='ko') ? '100–10000, 100의 배수' :
+        (lang==='th') ? '100–10000 และเป็นจำนวนคูณ 100' :
+        (lang==='vi') ? '100–10000, bội số của 100' :
+        '100–10000, kelipatan 100';
+    }
+
+    // 语言选择器事件
+    langSel.addEventListener('change', ()=>applyLang(langSel.value));
+
     // 初始状态
     meter();
     syncRange();
+
+    // 根据 localStorage 或浏览器语言设定默认语言
+    (function initLang(){
+      const saved = localStorage.getItem('wormhole_lang');
+      let lang = saved || (navigator.language||'').toLowerCase().startsWith('zh') ? 'zh' : 'en';
+      langSel.value = lang;
+      applyLang(lang);
+    })();
+
   </script>
 </body>
 </html>
-
-
