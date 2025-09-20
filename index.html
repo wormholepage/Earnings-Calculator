@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0b1220" />
-  <title>Wormhole 智能托管收益计算器（USDT + WHO）· 美化版</title>
+  <title>Wormhole 智能托管收益计算器</title>
   <style>
     /* =============== CSS 变量 & 主题 =============== */
     :root{
@@ -113,7 +113,7 @@
     <div class="header">
       <div>
         <!-- === 标题区改为可替换 === -->
-        <h1 class="title" id="appTitle">Wormhole 收益计算器 <span class="subtitle" id="appTitleSub">（USDT + WHO）</span></h1>
+        <h1 class="title" id="appTitle">Wormhole 智能托管收益计算器 <span class="subtitle" id="appTitleSub"></span></h1>
         <div class="subtitle" id="slogan">一起共筑跨链隐私生态！</div>
       </div>
       <div class="toolbar" role="toolbar" aria-label="快速操作">
@@ -421,7 +421,7 @@
 
     const I18N = {
       zh: {
-        app_title:'Wormhole 收益计算器', app_sub:'（USDT + WHO）', slogan:'一起共筑跨链隐私生态！',
+        app_title:'Wormhole 智能托管收益计算器', app_sub:'', slogan:'一起共筑跨链隐私生态！',
         btn_example:'示例', btn_copy:'复制结果', tip_example:'填入示例值', tip_copy:'复制结果到剪贴板',
         lbl_point:'地址点位（0–1 之间）',
         point_hint:'填 <strong>1</strong> 表示 <strong>1%</strong>；填 <strong>0.8</strong> 表示 <strong>0.8%</strong> 的基准上限。',
@@ -444,10 +444,10 @@
         unit_day:'天',
         copy_point:'点位', copy_amount:'金额', copy_period:'周期',
         toast_cleared:'已清空', toast_copied:'结果已复制', toast_copy_fail:'复制失败',
-        document_title:'Wormhole 智能托管收益计算器（USDT + WHO）· 美化版'
+        document_title:'Wormhole 智能托管收益计算器'
       },
       en: {
-        app_title:'Wormhole Earnings Calculator', app_sub:'(USDT + WHO)', slogan:'Build the cross-chain privacy ecosystem together!',
+        app_title:'Wormhole Smart Custody Earnings Calculator', app_sub:'', slogan:'Build the cross-chain privacy ecosystem together!',
         btn_example:'Example', btn_copy:'Copy',
         tip_example:'Fill with example values', tip_copy:'Copy results to clipboard',
         lbl_point:'Address point (between 0–1)',
@@ -470,10 +470,10 @@
         unit_day:'days',
         copy_point:'Point', copy_amount:'Amount', copy_period:'Period',
         toast_cleared:'Cleared', toast_copied:'Copied', toast_copy_fail:'Copy failed',
-        document_title:'Wormhole Earnings Calculator (USDT + WHO) · Polished'
+        document_title:'Wormhole Intelligent Custody Earnings Calculator'
       },
       th: {
-        app_title:'Wormhole ตัวคำนวณผลตอบแทน', app_sub:'(USDT + WHO)', slogan:'มาร่วมสร้างระบบนิเวศความเป็นส่วนตัวข้ามเชน!',
+        app_title:'Wormhole เครื่องคำนวณผลตอบแทนคัสโตดี้อัจฉริยะ', app_sub:'', slogan:'มาร่วมสร้างระบบนิเวศความเป็นส่วนตัวข้ามเชน!',
         btn_example:'ตัวอย่าง', btn_copy:'คัดลอก',
         tip_example:'กรอกค่าตัวอย่าง', tip_copy:'คัดลอกผลลัพธ์',
         lbl_point:'คะแนนที่อยู่ (ระหว่าง 0–1)',
@@ -496,10 +496,10 @@
         unit_day:'วัน',
         copy_point:'จุด', copy_amount:'จำนวนเงิน', copy_period:'ระยะเวลา',
         toast_cleared:'ล้างแล้ว', toast_copied:'คัดลอกแล้ว', toast_copy_fail:'คัดลอกล้มเหลว',
-        document_title:'Wormhole ตัวคำนวณผลตอบแทน (USDT + WHO)'
+        document_title:'Wormhole เครื่องคำนวณผลตอบแทนคัสโตดี้อัจฉริยะ'
       },
       vi: {
-        app_title:'Máy tính lợi nhuận Wormhole', app_sub:'(USDT + WHO)', slogan:'Cùng xây dựng hệ sinh thái quyền riêng tư cross-chain!',
+        app_title:'Máy tính lợi nhuận lưu ký thông minh Wormhole', app_sub:'', slogan:'Cùng xây dựng hệ sinh thái quyền riêng tư cross-chain!',
         btn_example:'Ví dụ', btn_copy:'Sao chép',
         tip_example:'Điền giá trị ví dụ', tip_copy:'Sao chép kết quả',
         lbl_point:'Điểm địa chỉ (0–1)',
@@ -522,10 +522,10 @@
         unit_day:'ngày',
         copy_point:'Điểm', copy_amount:'Số tiền', copy_period:'Chu kỳ',
         toast_cleared:'Đã xoá', toast_copied:'Đã sao chép', toast_copy_fail:'Sao chép lỗi',
-        document_title:'Máy tính lợi nhuận Wormhole (USDT + WHO)'
+        document_title:'Máy tính lợi nhuận lưu ký thông minh Wormhole'
       },
       id: {
-        app_title:'Kalkulator Hasil Wormhole', app_sub:'(USDT + WHO)', slogan:'Bangun ekosistem privasi lintas-rantai bersama!',
+        app_title:'Kalkulator Hasil Kustodi Cerdas Wormhole', app_sub:'', slogan:'Bangun ekosistem privasi lintas-rantai bersama!',
         btn_example:'Contoh', btn_copy:'Salin',
         tip_example:'Isi nilai contoh', tip_copy:'Salin hasil',
         lbl_point:'Titik alamat (antara 0–1)',
@@ -548,10 +548,10 @@
         unit_day:'hari',
         copy_point:'Poin', copy_amount:'Jumlah', copy_period:'Periode',
         toast_cleared:'Direset', toast_copied:'Disalin', toast_copy_fail:'Gagal menyalin',
-        document_title:'Kalkulator Hasil Wormhole (USDT + WHO)'
+        document_title:'Kalkulator Hasil Kustodi Cerdas Wormhole'
       },
       ja: {
-        app_title:'Wormhole 収益計算機', app_sub:'(USDT + WHO)', slogan:'クロスチェーンのプライバシーエコシステムを共に！',
+        app_title:'Wormhole スマートカストディ収益計算機', app_sub:'', slogan:'クロスチェーンのプライバシーエコシステムを共に！',
         btn_example:'サンプル', btn_copy:'結果をコピー',
         tip_example:'サンプル値を入力', tip_copy:'結果をクリップボードへ',
         lbl_point:'アドレスポイント（0～1 の間）',
@@ -574,10 +574,10 @@
         unit_day:'日',
         copy_point:'ポイント', copy_amount:'金額', copy_period:'期間',
         toast_cleared:'クリアしました', toast_copied:'コピーしました', toast_copy_fail:'コピー失敗',
-        document_title:'Wormhole 収益計算機 (USDT + WHO)'
+        document_title:'Wormhole スマートカストディ収益計算機'
       },
       ko: {
-        app_title:'Wormhole 수익 계산기', app_sub:'(USDT + WHO)', slogan:'크로스체인 프라이버시 생태계를 함께 구축해요!',
+        app_title:'Wormhole 지능형 커스터디 수익 계산기', app_sub:'', slogan:'크로스체인 프라이버시 생태계를 함께 구축해요!',
         btn_example:'예시', btn_copy:'결과 복사',
         tip_example:'예시 값 입력', tip_copy:'결과를 클립보드로 복사',
         lbl_point:'주소 포인트 (0–1 사이)',
@@ -600,7 +600,7 @@
         unit_day:'일',
         copy_point:'포인트', copy_amount:'금액', copy_period:'기간',
         toast_cleared:'초기화됨', toast_copied:'복사됨', toast_copy_fail:'복사 실패',
-        document_title:'Wormhole 수익 계산기 (USDT + WHO)'
+        document_title:'Wormhole 지능형 커스터디 수익 계산기'
       }
     };
 
@@ -618,6 +618,9 @@
 
       // 标题 & slogan
       $('#appTitle').innerHTML = `${t('app_title')} <span class="subtitle" id="appTitleSub">${t('app_sub')}</span>`;
+      const sub = document.getElementById('appTitleSub'); // 空副标题则隐藏
+      sub.style.display = sub.textContent.trim() ? '' : 'none';
+
       $('#slogan').textContent = t('slogan');
 
       // 工具栏按钮
