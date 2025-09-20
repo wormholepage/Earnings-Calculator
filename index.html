@@ -124,7 +124,7 @@
     <div class="header">
       <div>
         <h1 class="title">Wormhole 收益计算器 <span class="subtitle">（USDT + WHO）</span></h1>
-        <div class="subtitle">更清晰的输入、更直观的结果，完全离线计算。</div>
+        <div class="subtitle">一起共筑跨链隐私生态！</div>
       </div>
       <div class="toolbar" role="toolbar" aria-label="快速操作">
         <button id="exampleBtn" class="btn ghost" data-tip="填入示例值"><svg width="16" height="16"><use href="#i-rocket"/></svg> 示例</button>
@@ -137,7 +137,7 @@
         <div>
           <label for="point">地址点位（0–1 之间）</label>
           <div class="input">
-            <input id="point" type="number" inputmode="decimal" placeholder="例如：1 或 0.8" min="0" max="1" step="0.01" aria-describedby="pointHint pointErr" />
+            <input id="point" type="number" inputmode="decimal" placeholder="例如：0.5 或 0.7" min="0" max="1" step="0.01" aria-describedby="pointHint pointErr" />
           </div>
           <input id="pointRange" type="range" min="0" max="1" step="0.01" aria-label="点位滑杆" />
           <div id="pointHint" class="hint">填 <strong>1</strong> 表示 <strong>1%</strong>；填 <strong>0.8</strong> 表示 <strong>0.8%</strong> 的基准上限。</div>
@@ -165,7 +165,7 @@
             <div class="chip" data-amt="10000">10000</div>
           </div>
           <div id="amountErr" class="error" role="alert" aria-live="polite" hidden>
-            <svg width="16" height="16"><use href="#i-alert"/></svg><span>仅支持 100–1000（每 100）与 1000–10000（每 1000）。</span>
+            <svg width="16" height="16"><use href="#i-alert"/></svg><span>仅支持 100–10000，且为 100 的整数倍。</span>
           </div>
         </div>
 
@@ -178,7 +178,7 @@
             <option value="180" data-multiplier="0.9">180 天（收益分成率：90%）</option>
             <option value="360" data-multiplier="1.0">360 天（收益分成率：100%）</option>
           </select>
-          <div id="periodHint" class="hint">注：此处按 <strong>360 天</strong> 为最高档。</div>
+          <div id="periodHint" class="hint">注：此处按 <strong>360 天</strong> 为最高档（题述“3600天”理解为笔误）。</div>
           <div class="hint">收益分成率进度：</div>
           <div class="meter" aria-hidden="true"><span id="meterBar"></span></div>
         </div>
@@ -272,8 +272,10 @@
     // 生成对照表
     const whoTableBody = $('#whoTableBody');
     (function fillWhoTable(){
-      const keys = Object.keys(WHO_MAP).map(Number).sort((a,b)=>a-b);
-      whoTableBody.innerHTML = keys.map(k=>`<tr><td>${k}</td><td>${WHO_MAP[k]}</td></tr>`).join('');
+      const rows = [];
+      for(let k=100;k<=1000;k+=100){ rows.push([k, WHO_MAP[k]]); }
+      for(let k=1100;k<=10000;k+=100){ rows.push([k, (k*0.005).toFixed(2).replace(/\.00$/,'')]); }
+      whoTableBody.innerHTML = rows.map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('');
     })();
 
     function fmtPct(v){ return (v*100).toFixed(3).replace(/\.0+$/,'') + '%'; }
@@ -315,9 +317,7 @@
       }
 
       const amount = Number(amountEl.value);
-      if (isNaN(amount) || amount <= 0 || amount % 100 !== 0){
-        amountErr.hidden = false; ok = false;
-      } else if (!(amount in WHO_MAP)){
+      if (isNaN(amount) || amount < 100 || amount > 10000 || amount % 100 !== 0){
         amountErr.hidden = false; ok = false;
       }
 
@@ -338,7 +338,7 @@
       const totalUSDT = dailyIncome * days;
 
       // WHO 部分
-      const whoDaily = WHO_MAP[amount];
+      const whoDaily = amount <= 1000 ? WHO_MAP[amount] : amount * 0.005;
       const whoTotal = whoDaily * days;
 
       // 展示
@@ -381,10 +381,8 @@
     pointEl.addEventListener('input', ()=>{ pointRange.value = pointEl.value || 0; setStatus('', '等待计算'); });
     pointRange.addEventListener('input', ()=>{ pointEl.value = pointRange.value; setStatus('', '等待计算'); });
     amountEl.addEventListener('input', ()=>{
-      // 自动调整 step：100~1000 -> 100；>1000 -> 1000
-      const v = Number(amountEl.value||0);
-      amountEl.step = v <= 1000 ? 100 : 1000;
-      amountRange.step = amountEl.step;
+      amountEl.step = 100;
+      amountRange.step = 100;
       amountRange.value = amountEl.value || 100;
       setStatus('', '等待计算');
     });
@@ -418,5 +416,4 @@
     syncRange();
   </script>
 </body>
-
 </html>
